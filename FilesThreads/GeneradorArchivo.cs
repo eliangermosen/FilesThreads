@@ -1,4 +1,5 @@
-﻿using SpreadsheetLight;
+﻿using Newtonsoft.Json;
+using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,6 +33,10 @@ namespace FilesThreads
                 {
                     //Console.WriteLine($"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoTxt}.");
                     TXT.WriteLine($"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoTxt.Elapsed.Seconds} s.\n");
+                }
+                else
+                {
+                    Console.WriteLine("TXT");
                 }
                 //Console.WriteLine($"ESTA ES MI VUELTA #{i}, EN UN TIEMPO DE {tiempoTxt}.");
                 //TXT.WriteLine($"ESTA ES MI VUELTA #{i}, EN UN TIEMPO DE {tiempoTxt}.\n");
@@ -73,6 +78,10 @@ namespace FilesThreads
                     //Console.WriteLine($"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoExcel}.");
                     dt.Rows.Add($"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoExcel.Elapsed.Seconds} s.\n");
                 }
+                else
+                {
+                    Console.WriteLine("EXCEL");
+                }
             }
             //dt.Rows.Add();
             slDocument.ImportDataTable(1, 1, dt, true);
@@ -85,12 +94,52 @@ namespace FilesThreads
 
         public void ArchivoJson()
         {
-            //Stopwatch tiempoJson = new Stopwatch();
-            ////string almacena = $"DATOS DEL ESTUDIANTE:\nMATRICULA: {Matricula}\nNOMBRE: {Nombre}\nAPELLIDO: {Apellido}\nCARRERA: {Carrera}\nDIRECCION: {Direccion}\nTELEFONO: {Telefono}\nEMAIL: {Email}\n";
-            //string pathFile = "json.json";
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Stopwatch tiempoJson = new Stopwatch();
+
+            string pathFile = "json.json";
+            string almacena;
+            string vJson;
+            for (int i = 1; i <= 100; i++)
+            {
+                if (i == 1)
+                {
+                    //Console.WriteLine($"ESTA ES MI VUELTA INICIAL, EN UN TIEMPO DE {tiempoExcel}.");
+                    almacena = $"ESTA ES MI VUELTA INICIAL, EN UN TIEMPO DE {tiempoJson.Elapsed.Seconds} s.\n";
+
+                    vJson = JsonConvert.SerializeObject(almacena, Formatting.None);
+                    File.AppendAllText(pathFile, vJson);
+                }
+                if (i == 2 || i < 100)
+                {
+                    //Console.WriteLine($"ESTA ES MI VUELTA #{i}, EN UN TIEMPO DE {tiempoExcel}.");
+                    almacena = $"ESTA ES MI VUELTA #{i}, EN UN TIEMPO DE {tiempoJson.Elapsed.Seconds} s.\n";
+
+                    vJson = JsonConvert.SerializeObject(almacena, Formatting.None);
+                    File.AppendAllText(pathFile, vJson);
+                }
+                else if (i == 100)
+                {
+                    //Console.WriteLine($"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoExcel}.");
+                    almacena = $"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoJson.Elapsed.Seconds} s.\n";
+
+                    vJson = JsonConvert.SerializeObject(almacena, Formatting.None);
+                    File.AppendAllText(pathFile, vJson);
+                }
+                else
+                {
+                    Console.WriteLine("JSON");
+                }
+                //string vJson = JsonConvert.SerializeObject(almacena, Formatting.None);
+                //File.AppendAllText(pathFile, vJson);
+            }
+            //almacena = $"DATOS DEL ESTUDIANTE:\nMATRICULA:\n";
             //string vJson = JsonConvert.SerializeObject(almacena, Formatting.None);
             //File.AppendAllText(pathFile, vJson);
-            Console.WriteLine("\nJSON GUARDADO CON EXITO!!!\n");
+            tiempoJson.Stop();
+            Console.WriteLine($"\nJSON GUARDADO CON EXITO EN UN TIEMPO FINAL DE {tiempoJson.Elapsed.TotalSeconds} s.!!!\n");
+            Console.WriteLine($"\nJSON GUARDADO CON EXITO EN UN TIEMPO FINAL DE {tiempoJson.Elapsed.Seconds} s.!!!\n");
+            Console.ResetColor();
         }
 
     }
