@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpreadsheetLight;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -47,24 +48,39 @@ namespace FilesThreads
 
         public void ArchivoExcel()
         {
-            //Stopwatch tiempoExcel = new Stopwatch();
-            //SLDocument eLDocument = new SLDocument();
-            //System.Data.DataTable dt = new System.Data.DataTable();
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Stopwatch tiempoExcel = new Stopwatch();
 
-            //dt.Columns.Add("Matricula", typeof(string));
-            //dt.Columns.Add("Nombre", typeof(string));
-            //dt.Columns.Add("Apellido", typeof(string));
-            //dt.Columns.Add("Carrera", typeof(string));
-            //dt.Columns.Add("Direccion", typeof(string));
-            //dt.Columns.Add("Telefono", typeof(string));
-            //dt.Columns.Add("Email", typeof(string));
+            SLDocument slDocument = new SLDocument();
+            System.Data.DataTable dt = new System.Data.DataTable();
 
-            //dt.Rows.Add(Matricula, Nombre, Apellido, Carrera, Direccion, Telefono, Email);
+            dt.Columns.Add("EXCEL SIN HILOS:", typeof(string));
 
-            //eLDocument.ImportDataTable(1, 1, dt, true);
-
-            //eLDocument.SaveAs("excel.xlsx");
-            Console.WriteLine("\nXLSX GUARDADO CON EXITO!!!\n");
+            for (int i = 1; i <= 100; i++)
+            {
+                if (i == 1)
+                {
+                    //Console.WriteLine($"ESTA ES MI VUELTA INICIAL, EN UN TIEMPO DE {tiempoExcel}.");
+                    dt.Rows.Add($"ESTA ES MI VUELTA INICIAL, EN UN TIEMPO DE {tiempoExcel.Elapsed.Seconds} s.\n");
+                }
+                if (i == 2 || i < 100)
+                {
+                    //Console.WriteLine($"ESTA ES MI VUELTA #{i}, EN UN TIEMPO DE {tiempoExcel}.");
+                    dt.Rows.Add($"ESTA ES MI VUELTA #{i}, EN UN TIEMPO DE {tiempoExcel.Elapsed.Seconds} s.\n");
+                }
+                else if (i == 100)
+                {
+                    //Console.WriteLine($"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoExcel}.");
+                    dt.Rows.Add($"ESTA ES MI VUELTA FINAL, EN UN TIEMPO DE {tiempoExcel.Elapsed.Seconds} s.\n");
+                }
+            }
+            //dt.Rows.Add();
+            slDocument.ImportDataTable(1, 1, dt, true);
+            slDocument.SaveAs("excel.xlsx");
+            tiempoExcel.Stop();
+            Console.WriteLine($"\nEXCEL GUARDADO CON EXITO EN UN TIEMPO FINAL DE {tiempoExcel.Elapsed.TotalSeconds} s.!!!\n");
+            Console.WriteLine($"\nEXCEL GUARDADO CON EXITO EN UN TIEMPO FINAL DE {tiempoExcel.Elapsed.Seconds} s.!!!\n");
+            Console.ResetColor();
         }
 
         public void ArchivoJson()

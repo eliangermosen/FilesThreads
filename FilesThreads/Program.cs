@@ -11,9 +11,9 @@ namespace FilesThreads
 
             /*GENERADOR ARCHIVO SIN HILOS*/
             GeneradorArchivo generadorArchivo = new GeneradorArchivo();//instancia clase de generadorarchivo sin hilo
-            generadorArchivo.ArchivoTxt();
-            //generadorArchivo.ArchivoExcel();
-            //generadorArchivo.ArchivoExcel();
+            //generadorArchivo.ArchivoTxt();
+            generadorArchivo.ArchivoExcel();
+            //generadorArchivo.ArchivoJson();
 
             /*GENERADOR ARCHIVO CON HILOS*/
             //GeneradorArchivoThreads generadorArchivoThreads = new GeneradorArchivoThreads();//instancia clase de generadorarchivo con hilo
